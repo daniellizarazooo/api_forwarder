@@ -1,0 +1,5 @@
+C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\bin\Release\net8.0\win-x64\publish\appsettings.Development.json
+C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\bin\Release\net8.0\win-x64\publish\appsettings.json
+C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\bin\Release\net8.0\win-x64\publish\api_forwarder.pdb
+C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\bin\Release\net8.0\win-x64\publish\aspnetcorev2_inprocess.dll
+C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\bin\Release\net8.0\win-x64\publish\api_forwarder.exe

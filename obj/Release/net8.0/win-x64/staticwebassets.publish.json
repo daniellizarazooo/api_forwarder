@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "x8GEPMykYBjFtSgMkUyatjwBH+ZD8MeAs2ce/Se+f68=",
+  "Source": "api_forwarder",
+  "BasePath": "_content/api_forwarder",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
