@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("api_forwarder")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+336dc5ed8ba31ce22f5df2cbebf34ece70ac53ec")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e14444778f56c668f98b44310a4e6562c1cf5c02")]
 [assembly: System.Reflection.AssemblyProductAttribute("api_forwarder")]
 [assembly: System.Reflection.AssemblyTitleAttribute("api_forwarder")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

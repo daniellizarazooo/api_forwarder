@@ -98,7 +98,7 @@ app.MapGet("/proxy/light",  ([FromQuery] string? url,[FromQuery] string? token) 
 .WithName("GetLitghtingIntensity")
 .WithOpenApi();
 
-app.MapGet("/proxy/scene", ([FromQuery] string url, [FromQuery] string token) =>
+app.MapGet("/proxy/scene", ([FromQuery] string url, [FromQuery] string token,[FromQuery] string? name) =>
 {
 
     if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(token))
@@ -123,9 +123,9 @@ app.MapGet("/proxy/scene", ([FromQuery] string url, [FromQuery] string token) =>
 
     double? scene = scenes.GetByKey(decodedUrl);
 
-    if (scene == null) return Results.Ok(-1);
+    Console.WriteLine($"{DateTime.Now.ToShortTimeString()}: /scene name:{name} scene:{scene ?? -1}");
 
-    return Results.Ok(scene);
+    return Results.Ok(scene ?? -1);
 }
 )
 .WithName("GetScene")
@@ -134,7 +134,6 @@ app.MapGet("/proxy/scene", ([FromQuery] string url, [FromQuery] string token) =>
 app.MapPost("/proxy/scene", async (SceneToSet payload) =>
 {
     
-
     string targetUrl = Uri.UnescapeDataString(payload.Url); // Url of device to change scene
 
     if (!targetUrl.Contains("/scene"))
@@ -179,6 +178,8 @@ app.MapPost("/proxy/scene", async (SceneToSet payload) =>
         SceneResponse? jsonResponse = System.Text.Json.JsonSerializer.Deserialize<SceneResponse>(responseBody);
 
         // Console.WriteLine($"Active scene response: {jsonResponse?.ActiveScene}");
+
+        Console.WriteLine($"{DateTime.Now.ToShortTimeString()}: /put/scene scene:{jsonResponse?.ActiveScene}");
 
         return Results.Ok(jsonResponse?.ActiveScene ?? -1);
     }
