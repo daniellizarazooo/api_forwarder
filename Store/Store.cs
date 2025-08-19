@@ -16,9 +16,9 @@ namespace Store
                 return false;
         }
 
-        public void Add(string key, string token)
+        public void Add(string key, string token, string? name)
         {
-            _intensities.TryAdd(key, new Data { Token = token, Value = 0 });
+            _intensities.TryAdd(key, new Data { Token = token, Value = 0 , Name = name ?? string.Empty});
         }
 
         public double? GetByKey(string key)

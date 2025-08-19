@@ -16,6 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<Intensities>();
 builder.Services.AddSingleton<Scenes>();
 
+
 builder.WebHost.UseUrls("http://*:5004");
 
 builder.Services.AddCors(options =>
@@ -47,26 +48,63 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Global variables to use. If server restarted they restart
-ConcurrentDictionary<string, Data> lightingDict = new ConcurrentDictionary<string, Data>();
-
 //DATA STORE 
-
 var intensities = app.Services.GetRequiredService<Intensities>();
 var scenes = app.Services.GetRequiredService<Scenes>();
-// Run tasks
+
+// RUN TASKS
 var cts = new CancellationTokenSource();
 var fetcher = new ApiFetcher(intensities,scenes);
-_ = Task.Run(() => fetcher.RunAsync(cts.Token));
+_ = Task.Run(() => fetcher.RunAsync2(cts.Token, app.Logger));
 
-
+// ------------------------------------------ROUTES -----------------------------------------------------
 app.MapGet("/", () =>
 {
     return Results.Ok("SERVER RUNNING");
 }).WithName("Test")
 .WithOpenApi();
 
-app.MapGet("/proxy/light",  ([FromQuery] string? url,[FromQuery] string? token) =>
+app.MapGet("/proxy/light/all", () =>
+{
+
+    var allIntensities = intensities.GetAll();
+
+    return Results.Ok(allIntensities);
+})
+.WithName("GetAllIntensities")
+.WithTags("Light")
+.WithOpenApi();
+
+app.MapGet("proxy/scene/all", ([FromQuery] bool? on) =>
+{
+
+    // on queryparameter is a filter condition to return only Scenes different than 0.
+    var allScenes = scenes.GetAll();
+
+    if (on == true)
+    {
+        var filtered = allScenes
+            .Where(kvp => kvp.Value.Value != 0)
+            .Select(kvp => new { kvp.Value.Name, kvp.Value.Value })
+            .ToList();
+
+        return Results.Ok(filtered);
+
+    }
+
+    var result = allScenes
+    .Select(kvp => new { kvp.Value.Name, kvp.Value.Value });
+
+    return Results.Ok(result);
+})
+.WithName("GetAllScenes")
+.WithTags("Scene")
+.WithOpenApi();
+
+/*
+* /proxy/light returns the lighting intesity for a given url
+*/
+app.MapGet("/proxy/light",  ([FromQuery] string? url,[FromQuery] string? token, [FromQuery] string? name) =>
 {
     if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(token))
         return Results.Ok(-1);
@@ -84,18 +122,20 @@ app.MapGet("/proxy/light",  ([FromQuery] string? url,[FromQuery] string? token) 
 
     if (!keyExists)
     {
-        intensities.Add(decodedUrl, decodedToken);
+        intensities.Add(decodedUrl, decodedToken,name);
         return Results.Ok(-1);
     }
 
     double? intensity = intensities.GetByKey(decodedUrl);
 
     if (intensity == null) return Results.Ok(-1);
+    Console.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}: /lighting name:{name} intensity:{intensity ?? -1}");
 
     return Results.Ok(intensity);
 
 })
 .WithName("GetLitghtingIntensity")
+.WithTags("Light")
 .WithOpenApi();
 
 app.MapGet("/proxy/scene", ([FromQuery] string url, [FromQuery] string token,[FromQuery] string? name) =>
@@ -117,23 +157,24 @@ app.MapGet("/proxy/scene", ([FromQuery] string url, [FromQuery] string token,[Fr
 
     if (!keyExists)
     {
-        scenes.Add(decodedUrl, decodedToken);
+        scenes.Add(decodedUrl, decodedToken,name);
         return Results.Ok(-1);
     }
 
     double? scene = scenes.GetByKey(decodedUrl);
 
-    Console.WriteLine($"{DateTime.Now.ToShortTimeString()}: /scene name:{name} scene:{scene ?? -1}");
+    Console.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}: /scene name:{name} scene:{scene ?? -1}");
 
     return Results.Ok(scene ?? -1);
 }
 )
 .WithName("GetScene")
+.WithTags("Scene")
 .WithOpenApi();
 
-app.MapPost("/proxy/scene", async (SceneToSet payload) =>
+app.MapPost("/proxy/scene", async (SceneToSet payload, [FromQuery] string? name) =>
 {
-    
+
     string targetUrl = Uri.UnescapeDataString(payload.Url); // Url of device to change scene
 
     if (!targetUrl.Contains("/scene"))
@@ -166,6 +207,8 @@ app.MapPost("/proxy/scene", async (SceneToSet payload) =>
         "application/json"
     );
 
+    Console.WriteLine($"\n{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")} Request: Scene to set {name}: {sceneToBeSet}\n");
+
     try
     {
         // Make PUT request
@@ -179,17 +222,19 @@ app.MapPost("/proxy/scene", async (SceneToSet payload) =>
 
         // Console.WriteLine($"Active scene response: {jsonResponse?.ActiveScene}");
 
-        Console.WriteLine($"{DateTime.Now.ToShortTimeString()}: /put/scene scene:{jsonResponse?.ActiveScene}");
+        Console.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}: /put/scene scene:{jsonResponse?.ActiveScene}");
 
         return Results.Ok(jsonResponse?.ActiveScene ?? -1);
     }
     catch (Exception ex)
     {
+        Log.Error(ex, $"Error when trying to update {name}",ex.Message);
         Console.WriteLine($"Error during PUT: {ex.Message}");
         return Results.Ok(-1);
     }
 })
 .WithName("ChangeScene")
+.WithTags("Scene")
 .WithOpenApi();
 
 app.UseCors();

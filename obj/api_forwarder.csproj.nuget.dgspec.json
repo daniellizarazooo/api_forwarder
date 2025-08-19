@@ -1,21 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Andrew Scicluna\\Documents\\Daniel_programs\\C#\\api_forwarder\\api_forwarder.csproj": {}
+    "C:\\Users\\Administrator\\Documents\\Api_Forwarder\\api_forwarder\\api_forwarder.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Andrew Scicluna\\Documents\\Daniel_programs\\C#\\api_forwarder\\api_forwarder.csproj": {
+    "C:\\Users\\Administrator\\Documents\\Api_Forwarder\\api_forwarder\\api_forwarder.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Andrew Scicluna\\Documents\\Daniel_programs\\C#\\api_forwarder\\api_forwarder.csproj",
+        "projectUniqueName": "C:\\Users\\Administrator\\Documents\\Api_Forwarder\\api_forwarder\\api_forwarder.csproj",
         "projectName": "api_forwarder",
-        "projectPath": "C:\\Users\\Andrew Scicluna\\Documents\\Daniel_programs\\C#\\api_forwarder\\api_forwarder.csproj",
-        "packagesPath": "C:\\Users\\Andrew Scicluna\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Andrew Scicluna\\Documents\\Daniel_programs\\C#\\api_forwarder\\obj\\",
+        "projectPath": "C:\\Users\\Administrator\\Documents\\Api_Forwarder\\api_forwarder\\api_forwarder.csproj",
+        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Administrator\\Documents\\Api_Forwarder\\api_forwarder\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Andrew Scicluna\\Documents\\Daniel_programs\\C#\\NuGet.Config",
-          "C:\\Users\\Andrew Scicluna\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
