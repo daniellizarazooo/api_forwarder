@@ -362,3 +362,10 @@ C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\bin\Release\
 C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\bin\Release\net8.0\win-x64\Serilog.Sinks.Console.dll
 C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\bin\Release\net8.0\win-x64\Serilog.Sinks.Debug.dll
 C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\bin\Release\net8.0\win-x64\Serilog.Sinks.File.dll
+C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\obj\Release\net8.0\win-x64\api_forwarder.sourcelink.json
+C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\bin\Release\net8.0\win-x64\publish\web.config
+C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\bin\Release\net8.0\win-x64\publish\appsettings.Development.json
+C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\bin\Release\net8.0\win-x64\publish\appsettings.json
+C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\bin\Release\net8.0\win-x64\publish\publish\web.config
+C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\bin\Release\net8.0\win-x64\publish\publish\appsettings.Development.json
+C:\Users\Andrew Scicluna\Documents\Daniel_programs\C#\api_forwarder\bin\Release\net8.0\win-x64\publish\publish\appsettings.json

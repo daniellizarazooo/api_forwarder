@@ -1,20 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Administrator\\Documents\\Api_Forwarder\\api_forwarder\\api_forwarder.csproj": {}
+    "C:\\Users\\Andrew Scicluna\\Documents\\Daniel_programs\\C#\\api_forwarder\\api_forwarder.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Administrator\\Documents\\Api_Forwarder\\api_forwarder\\api_forwarder.csproj": {
+    "C:\\Users\\Andrew Scicluna\\Documents\\Daniel_programs\\C#\\api_forwarder\\api_forwarder.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrator\\Documents\\Api_Forwarder\\api_forwarder\\api_forwarder.csproj",
+        "projectUniqueName": "C:\\Users\\Andrew Scicluna\\Documents\\Daniel_programs\\C#\\api_forwarder\\api_forwarder.csproj",
         "projectName": "api_forwarder",
-        "projectPath": "C:\\Users\\Administrator\\Documents\\Api_Forwarder\\api_forwarder\\api_forwarder.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Administrator\\Documents\\Api_Forwarder\\api_forwarder\\obj\\",
+        "projectPath": "C:\\Users\\Andrew Scicluna\\Documents\\Daniel_programs\\C#\\api_forwarder\\api_forwarder.csproj",
+        "packagesPath": "C:\\Users\\Andrew Scicluna\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Andrew Scicluna\\Documents\\Daniel_programs\\C#\\api_forwarder\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Andrew Scicluna\\Documents\\Daniel_programs\\C#\\NuGet.Config",
+          "C:\\Users\\Andrew Scicluna\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -47,6 +48,12 @@
               "target": "Package",
               "version": "[8.0.19, )"
             },
+            "Microsoft.NET.ILLink.Tasks": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.19, )",
+              "autoReferenced": true
+            },
             "Serilog.AspNetCore": {
               "target": "Package",
               "version": "[9.0.0, )"
@@ -71,6 +78,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[8.0.19, 8.0.19]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[8.0.19, 8.0.19]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+              "version": "[8.0.19, 8.0.19]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -80,6 +101,11 @@
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.413/PortableRuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
         }
       }
     }

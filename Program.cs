@@ -17,7 +17,7 @@ builder.Services.AddSingleton<Intensities>();
 builder.Services.AddSingleton<Scenes>();
 
 
-builder.WebHost.UseUrls("http://*:5004");
+builder.WebHost.UseUrls("http://*:5005");
 
 builder.Services.AddCors(options =>
 {
@@ -44,9 +44,11 @@ app.Logger.LogInformation("Running in port 5004");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+
 }
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 //DATA STORE 
 var intensities = app.Services.GetRequiredService<Intensities>();
@@ -62,6 +64,15 @@ app.MapGet("/", () =>
 {
     return Results.Ok("SERVER RUNNING");
 }).WithName("Test")
+.WithTags("Test")
+.WithOpenApi();
+
+app.MapGet("/error", () =>
+{
+    Log.Error($"I CAN DO EVERYTHING THROUGH CHRIST WHO STRENGTHENS ME");
+})
+.WithName("Error")
+.WithTags("Test")
 .WithOpenApi();
 
 app.MapGet("/proxy/light/all", () =>
