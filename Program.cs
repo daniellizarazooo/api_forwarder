@@ -9,16 +9,16 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<Intensities>();
+// Register this classes as unique
+builder.Services.AddSingleton<Intensities>(); 
 builder.Services.AddSingleton<Scenes>();
 
+builder.WebHost.UseUrls("http://*:5006"); // Port configuration
 
-builder.WebHost.UseUrls("http://*:5005");
-
+// Cors allows any origin to make request to the api proxy. TO improve security add environmental
+// variables
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -27,6 +27,7 @@ builder.Services.AddCors(options =>
     });
 });
 
+// This is for debugging. in Logs/errors.log you can see a little bit of debugging
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Error()
     .WriteTo.File("Logs/errors.log", rollingInterval: RollingInterval.Day)
@@ -50,12 +51,14 @@ if (app.Environment.IsDevelopment())
 app.UseSwagger();
 app.UseSwaggerUI();
 
-//DATA STORE 
+//This two values are used for lake of intensities and scenes. 
 var intensities = app.Services.GetRequiredService<Intensities>();
 var scenes = app.Services.GetRequiredService<Scenes>();
 
 // RUN TASKS
 var cts = new CancellationTokenSource();
+// create fetcher that is going to be passed as a Task, and the parameters are intensities and scenes
+// the two lists that were created before.
 var fetcher = new ApiFetcher(intensities,scenes);
 _ = Task.Run(() => fetcher.RunAsync2(cts.Token, app.Logger));
 

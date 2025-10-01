@@ -33,91 +33,6 @@ namespace Services
             _httpClient = new HttpClient(_handler);
         }
 
-        public async Task RunAsync(CancellationToken cancellationToken)
-        {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-
-                try
-                {
-                    // Loop scenes
-                    if (!_scenes.GetAll().IsEmpty)
-                    {
-                        foreach (var item in _scenes.GetAll())
-                        {
-                            try
-                            {
-                                string targetUrl = item.Key;
-                                Models.Data data = item.Value;
-
-                                var request = new HttpRequestMessage(HttpMethod.Get, targetUrl);
-                                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", data.Token);
-                                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                                request.Content = new StringContent("");
-
-                                var response = await _httpClient.SendAsync(request, cancellationToken);
-                                response.EnsureSuccessStatusCode();
-
-                                var content = await response.Content.ReadAsStringAsync(cancellationToken);
-
-                                var scene = JsonSerializer.Deserialize<Models.SceneResponse>(content);
-                                // Console.WriteLine($"TASK targetUrl = {targetUrl} Scene value: {scene?.ActiveScene ?? -1}");
-                                _scenes.updateValue(targetUrl, scene?.ActiveScene ?? -1);
-                                await Task.Delay(500, cancellationToken);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine($"Error _scenes looping{e.Message}");
-                            }
-                        }
-                    }
-                    await Task.Delay(500, cancellationToken);
-                    // Loop values in Store
-                    if (!_intensities.GetAll().IsEmpty)
-                    {
-                        foreach (var item in _intensities.GetAll())
-                        {
-                            try
-                            {
-
-                                string targetUrl = item.Key;
-                                Models.Data data = item.Value;
-                                var request = new HttpRequestMessage(HttpMethod.Get, targetUrl);
-                                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", data.Token);
-                                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                                request.Content = new StringContent("");
-
-                                var response = await _httpClient.SendAsync(request, cancellationToken);
-                                response.EnsureSuccessStatusCode();
-
-                                var content = await response.Content.ReadAsStringAsync(cancellationToken);
-
-                                var lighting = JsonSerializer.Deserialize<Models.LightingResponse>(content);
-
-                                // Console.WriteLine($"TASK targetUrl = {targetUrl} Lighting value: {lighting?.Intensity ?? -1}");
-                                // Console.WriteLine($"\n");
-                                var count = _intensities.GetAll().Count();
-                                // Console.WriteLine($"count {count}");
-                                // Console.WriteLine($"\n");
-                                _intensities.updateValue(targetUrl, lighting?.Intensity ?? -1);
-                                await Task.Delay(500, cancellationToken);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine($"Error _intensities looping {e.Message}");
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error fetching API: {ex.Message}");
-                }
-
-                await Task.Delay(1000, cancellationToken);
-            }
-        }
-
         public async Task RunAsync2(CancellationToken cancellationToken, ILogger logger)
         {
             while (!cancellationToken.IsCancellationRequested)
@@ -126,8 +41,8 @@ namespace Services
                 {
 
                     DateTime start = DateTime.Now;
-                    Console.WriteLine("\n");
-                    Console.WriteLine($"START: {start}");
+                    // Console.WriteLine("\n");
+                    // Console.WriteLine($"START: {start}");
 
                     var scenes = _scenes.GetAll();
                     var intensities = _intensities.GetAll();
@@ -189,8 +104,8 @@ namespace Services
                     }
 
                     TimeSpan diff = DateTime.Now - start;
-                    Console.WriteLine($"DateTime.Now: {DateTime.Now}");
-                    Console.WriteLine($"Elapsed seconds: {diff.TotalSeconds}");
+                    // Console.WriteLine($"DateTime.Now: {DateTime.Now}");
+                    // Console.WriteLine($"Elapsed seconds: {diff.TotalSeconds}");
                     
                     await Task.Delay(1000, cancellationToken);
                 }
